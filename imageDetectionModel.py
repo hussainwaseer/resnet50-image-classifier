@@ -21,9 +21,6 @@ preprocess = transforms.Compose([
 ])
 
 
- # Load ImageNet labels
- LABELS_URL = "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
- labels = requests.get(LABELS_URL).text.strip().split("\n")
 
  #while loop for detecting pictures again and again 
 while 1:
@@ -52,12 +49,19 @@ while 1:
         getImage = input("Enter the picture name with its extension: ")
         img = Image.open(getImage)
     elif inputForSearch==3:
+        os.system("clear")
+        print("Ending the session Good Bye....")
+        input("Press any key to exit")
         break
     else:
         print("Wrong input.....")
     # Preprocess the image
     input_tensor = preprocess(img)
     input_batch = input_tensor.unsqueeze(0)  # create mini-batch of 1 image
+
+    # Load ImageNet labels
+    LABELS_URL = "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
+    labels = requests.get(LABELS_URL).text.strip().split("\n")
 
     # Move to CPU or GPU (if available)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
